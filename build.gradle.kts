@@ -32,10 +32,14 @@ dependencies {
 
 // https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.13")
-    // https://mvnrepository.com/artifact/io.hypersistence/hypersistence-utils-hibernate-63
-    implementation("io.hypersistence:hypersistence-utils-hibernate-63:3.11.0")
 
     implementation ("org.mapstruct:mapstruct:1.6.3")
+
+    //RabbitMQ
+    // https://mvnrepository.com/artifact/org.springframework.amqp/spring-rabbit-test
+    implementation("org.springframework.boot:spring-boot-starter-amqp")
+    testImplementation("org.springframework.amqp:spring-rabbit-test")
+
 
     compileOnly("org.projectlombok:lombok")
     runtimeOnly("org.postgresql:postgresql")

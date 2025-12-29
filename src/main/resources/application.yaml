@@ -4,6 +4,12 @@ server:
 internal:
   api-key: ${INTERNAL_API_KEY}
 
+rabbitmq:
+  queue:
+    name: message_queue
+  queue_with_delay:
+    name: delay_queue
+
 spring:
   application:
     name: WorkoutManager
@@ -12,6 +18,12 @@ spring:
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
+  rabbitmq:
+    #By default, ??
+    username: guest
+    password: guest
+    host: localhost
+    port: 5672
 
   jpa:
     hibernate:
