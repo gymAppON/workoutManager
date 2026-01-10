@@ -23,8 +23,10 @@ public class ExerciseServiceImpl implements ExerciseService {
 
     @Override
     public ExerciseResponseDto create(ExerciseRequestDto request) {
-        //Request to User Manager, to check if user exist
-
+       // Request to User Manager, to check if user exist
+        if (!messageService.checkUserExistsViaRabbit(request.userId())){
+            throw new CustomNotFoundException("User", request.userId());
+        }
         //End of check
         ExerciseEntity exercise = exerciseRepository.save(exerciseMapper.toEntity(request));
 
@@ -54,9 +56,10 @@ public class ExerciseServiceImpl implements ExerciseService {
     public ExerciseResponseDto update(UUID id, ExerciseRequestDto request) {
         ExerciseEntity fromDb = findById(id);
 
-        //Check if user from Request exist
+        if (!messageService.checkUserExistsViaRabbit(request.userId())){
+            throw new CustomNotFoundException("User", request.userId());
+        }
 
-        //End of check
         ExerciseEntity updated = exerciseRepository.save(exerciseMapper.toEntity(request));
         log.info("{}: {} (Id: {}) was updated", LogEnum.SERVICE, OBJECT_NAME, id);
         return exerciseMapper.toResponse(updated);
