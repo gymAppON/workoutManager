@@ -2,6 +2,7 @@ package com.example.workoutManager.domain.exercise;
 
 import com.example.workoutManager.domain.exercise.dto.ExerciseRequestDto;
 import com.example.workoutManager.domain.exercise.dto.ExerciseResponseDto;
+import com.example.workoutManager.domain.workout.WorkoutEntity;
 import com.example.workoutManager.infrastructure.rabbitmq.RabbitMessageService;
 import com.example.workoutManager.shared.enums.LogEnum;
 import com.example.workoutManager.shared.exception.exceptions.general.CustomNotFoundException;
@@ -24,9 +25,7 @@ public class ExerciseServiceImpl implements ExerciseService {
     @Override
     public ExerciseResponseDto create(ExerciseRequestDto request) {
        // Request to User Manager, to check if user exist
-        if (!messageService.checkUserExistsViaRabbit(request.userId())){
-            throw new CustomNotFoundException("User", request.userId());
-        }
+        checkUserId(request.userId());
         //End of check
         ExerciseEntity exercise = exerciseRepository.save(exerciseMapper.toEntity(request));
 
@@ -55,12 +54,12 @@ public class ExerciseServiceImpl implements ExerciseService {
     @Override
     public ExerciseResponseDto update(UUID id, ExerciseRequestDto request) {
         ExerciseEntity fromDb = findById(id);
+        checkUserId(request.userId());
 
-        if (!messageService.checkUserExistsViaRabbit(request.userId())){
-            throw new CustomNotFoundException("User", request.userId());
-        }
+        ExerciseEntity fromRequest = exerciseMapper.toEntity(request);
+        fromRequest.setId(fromDb.getId());
 
-        ExerciseEntity updated = exerciseRepository.save(exerciseMapper.toEntity(request));
+        ExerciseEntity updated = exerciseRepository.save(fromRequest);
         log.info("{}: {} (Id: {}) was updated", LogEnum.SERVICE, OBJECT_NAME, id);
         return exerciseMapper.toResponse(updated);
     }
@@ -75,5 +74,11 @@ public class ExerciseServiceImpl implements ExerciseService {
     //FIND BY
     public ExerciseEntity findById(UUID id) {
         return exerciseRepository.findById(id).orElseThrow(() -> new CustomNotFoundException(OBJECT_NAME, id));
+    }
+
+    private void checkUserId(UUID userId) {
+        if (!messageService.checkUserExistsViaRabbit(userId)){
+            throw new CustomNotFoundException("User", userId);
+        }
     }
 }
