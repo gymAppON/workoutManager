@@ -6,8 +6,6 @@ import java.util.UUID;
 public record UserExerciseRequestDto(@NotNull UUID userId,
                                      @NotNull UUID trainingSessionId,
                                       @NotNull UUID exerciseId,
-                                      String notes,
-                                      Integer sets,
-                                      Integer reps,
-                                      Double weight) {
+                                      Integer rate,
+                                      String notation) {
 }

@@ -6,8 +6,6 @@ public record UserExerciseResponseDto(UUID id,
                                        UUID userId,
                                        UUID trainingSessionId,
                                        UUID exerciseId,
-                                       String notes,
-                                       Integer sets,
-                                       Integer reps,
-                                       Double weight) {
+                                       Integer rate,
+                                       String notation) {
 }

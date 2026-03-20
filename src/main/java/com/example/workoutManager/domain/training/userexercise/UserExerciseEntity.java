@@ -26,16 +26,10 @@ public class UserExerciseEntity {
     private UUID exerciseId;
 
     @Column
-    private String notes;
+    private Integer rate;
 
     @Column
-    private Integer sets;
-
-    @Column
-    private Integer reps;
-
-    @Column
-    private Double weight;
+    private String notation;
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
