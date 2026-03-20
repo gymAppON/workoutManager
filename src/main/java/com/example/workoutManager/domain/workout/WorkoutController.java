@@ -2,7 +2,6 @@ package com.example.workoutManager.domain.workout;
 
 import com.example.workoutManager.domain.workout.dto.WorkoutRequestDto;
 import com.example.workoutManager.domain.workout.dto.WorkoutResponseDto;
-import com.example.workoutManager.domain.workout.rating.dto.WorkoutRatingResponseDto;
 import com.example.workoutManager.shared.enums.LogEnum;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

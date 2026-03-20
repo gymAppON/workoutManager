@@ -34,6 +34,14 @@ public class OpenAPIConfig {
     }
 
     @Bean
+    public GroupedOpenApi apiTrainingsV1() {
+        return GroupedOpenApi.builder()
+                .group("Training API V1")
+                .pathsToMatch("/training/**")
+                .build();
+    }
+
+    @Bean
     @Primary
     public OpenAPI customOpenAPIv1() {
         return new OpenAPI()

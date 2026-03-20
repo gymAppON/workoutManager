@@ -33,7 +33,7 @@ public class WorkoutServiceIml implements WorkoutService {
     }
 
     @Override
-    public WorkoutResponseDto getById(UUID id) {
+    public WorkoutResponseDto getById(UUID id) throws CustomNotFoundException{
         WorkoutEntity workout = findById(id);
 
         log.info("{}: {} (Id: {}) was found", LogEnum.SERVICE, OBJECT_NAME, id);
@@ -49,7 +49,7 @@ public class WorkoutServiceIml implements WorkoutService {
     }
 
     @Override
-    public WorkoutResponseDto update(UUID id, WorkoutRequestDto request) {
+    public WorkoutResponseDto update(UUID id, WorkoutRequestDto request) throws CustomNotFoundException{
         WorkoutEntity fromDb = findById(id);
         checkUserId(request.userId());
 
@@ -69,7 +69,7 @@ public class WorkoutServiceIml implements WorkoutService {
     }
 
     //FIND BY
-    public WorkoutEntity findById(UUID id) {
+    public WorkoutEntity findById(UUID id) throws CustomNotFoundException{
         return workoutRepository.findById(id).orElseThrow(() -> new CustomNotFoundException(OBJECT_NAME, id));
     }
 
